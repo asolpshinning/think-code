@@ -17,42 +17,25 @@ function log(x){
   console.log(x)
 }
 
-function findSum(x, arr) {
-  let itExists = false;
-  let arrTruths = new Array(x).fill(false); //for numbers from 1 to x
-  let i = 0;
-  while ( i < x) {
-    let sum = 0;
-    //start with each element in the array and then add the next number to it until you hit the expected sum, i
-    let j = 0;
-    while(j < arr.length) {
-      if (arr[j] === i + 1) {
-        arrTruths[i] = true;
-        log(`for sum ${i+1}, ${arr[j]} exists in the array. So there is a subset `)
-        j = arr.length + 1
-        
-      } else if (arr[j] < i + 1) {
-        sum += arr[j];
-        if (sum === i + 1) {
-          arrTruths[i] = true;
-          log(`for sum ${i+1}, we have summed some array elements to equal sum. So there is a subset `)
-          j = arr.length + 1
-        } else if(sum > i+1){
-          sum -= arr[j];
-        }
-        else {
-          log(`for sum ${i+1}, sum is currently ${sum}... still looking for a complete subset `);
-          j++
-      }
-      } else {j = j + 1; console.log(`here right now`)}
-    }
-    i = i + 1;
-    console.log(`now going to run i = ${i}`)
+//3 = 111 or 12 or 
+//4 = 1111 or 13 or 22
+//5 = 11111 or 14
+
+//S0lution 1
+function isThereSubset(sum, arr){
+  let i = 0
+  while(i < sum){
+    if(arr.includes(sum)) {log(`array contains ${sum}`); i++; return true}
+    else if(sum === 1) {log(`array contains 1 in loop ${i}`); i++; return arr.includes(1)}
+    else if(sum === 0) {log(`array contains 0 in loop ${i}`); i++; return true}
+    else if(isThereSubset(i, arr) && isThereSubset(sum - i, arr)){log(`line 30: `, true); i++; return true}
+    else {log(`running else`); i++;}; 
   }
-  return arrTruths;
+
 }
-console.log(findSum(4, [5, 2, 3, 7]));
-//console.log(findSum(10, [6, 1, 7, 3, 5]));
+
+console.log(isThereSubset(10, [1,2,3,4,5]))
+//console.log(isThereSubset(10, [6, 1, 7, 3, 5]));
 
 
 
