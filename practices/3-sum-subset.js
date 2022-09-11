@@ -14,46 +14,37 @@ Output: False
 The given set does not have any subset whose sum is equal to '6'. */
 
 function log(x){
-    console.log(x)
-  }
-  
-  function findSum(x, arr) {
-    let itExists = false;
-    let arrTruths = new Array(x).fill(false); //for numbers from 1 to x
-    let i = 0;
-    while ( i < x) {
-      let sum = 0;
-      //start with each element in the array and then add the next number to it until you hit the expected sum, i
-      let j = 0;
-      while(j < arr.length) {
-        if (arr[j] === i + 1) {
-          arrTruths[i] = true;
-          log(`for sum ${i+1}, ${arr[j]} exists in the array. So there is a subset `)
-          j = arr.length + 1
-          
-        } else if (arr[j] < i + 1) {
-          sum += arr[j];
-          if (sum === i + 1) {
-            arrTruths[i] = true;
-            log(`for sum ${i+1}, we have summed some array elements to equal sum. So there is a subset `)
-            j = arr.length + 1
-          } else if(sum > i+1){
-            sum -= arr[j];
-          }
-          else {
-            log(`for sum ${i+1}, sum is currently ${sum}... still looking for a complete subset `);
-            j++
-        }
-        } else {j = j + 1; console.log(`here right now`)}
-      }
-      i = i + 1;
-      console.log(`now going to run i = ${i}`)
+  console.log(x)
+}
+
+//3 = 111 or 12 or 
+//4 = 1111 or 13 or 22
+//5 = 11111 or 14
+
+function isThereSubset(sum, arr = []){
+ 
+    
+    if(arr.includes(sum)) {log(`array contains ${sum}`);  return true}
+    if(sum === 1) {log(`array contains 1`);  return arr.includes(1)}
+    if(sum === 0) {log(`array contains 0`);  return true}
+
+    let ret = false;
+    let i = 1;
+    let initArr= [0];
+    let newArr;
+    while(i<=sum){
+      
+      newArr = [...arr,1000, 2000]
+      newArr.splice(i,1); log(`At loop ${i}, newArr is ${newArr} and old arr is ${arr}`)
+      if(arr.includes(i) && isThereSubset(sum - i, newArr)){log(`Running loop ${i} at line 52: ${true}`); ret = true; break;}
+      else {log(`running else`); i++ };
     }
-    return arrTruths;
-  }
-  console.log(findSum(4, [5, 2, 3, 7]));
-  //console.log(findSum(10, [6, 1, 7, 3, 5]));
-  
-  
-  
-  
+
+  return ret;
+}
+
+//console.log(isThereSubset(10, [1,2,3,4,5]))
+console.log(isThereSubset(19, [6, 1, 3, 6, 5]));
+
+
+

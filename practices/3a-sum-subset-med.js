@@ -24,18 +24,19 @@ test_09:
 sumPossible(13, [3, 5]); // -> true */
 
 const sumPossible = (sum, array, memo={0: true}) => {
-  if(sum in memo) return memo[sum];
-  if(sum <0) return false;
-  //if(sum === 0) return true;
-  for(el of array){
-      if(sumPossible(sum - el, array, memo) === false){console.log(`sum is now ${sum - el}`); memo[sum] = false}
-      else {return true}
-  } 
-  memo[sum] = false;
-  return memo[sum]
-}
-
-//console.log(sumPossible(8, [5, 12, 4]))
-// console.log(sumPossible(40, [8, 45, 59, 66]));
-// console.log(sumPossible(13, [3, 5]));
-console.log(sumPossible(2017, [4, 2, 10]))
+    if(sum in memo) return memo[sum];
+    if(sum <0) return false;
+    //if(sum === 0) return true;
+    for(el of array){
+        if(sumPossible(sum - el, array, memo) === false){console.log(`sum is now ${sum - el}`); memo[sum] = false}
+        else {return true}
+    } 
+    memo[sum] = false;
+    return memo[sum]
+  }
+  
+  //console.log(sumPossible(8, [5, 12, 4]))
+  // console.log(sumPossible(40, [8, 45, 59, 66]));
+  // console.log(sumPossible(13, [3, 5]));
+  console.log(sumPossible(2017, [4, 2, 10]))
+  
