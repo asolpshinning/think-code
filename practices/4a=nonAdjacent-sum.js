@@ -38,13 +38,13 @@ nonAdjacentSum(nums); // -> 1465 */
 
 
 const nonAdjacentSum = (nums, index = 0, memo = {}) => {
-  // todo
-  if(index in memo) return memo[index];
-  if(nums.length-1 === index) return nums[nums.length-1];
-  if(index >= nums.length) return 0
-  let first = nums[index] + nonAdjacentSum(nums, index + 2, memo);
-  let second = nonAdjacentSum(nums, index + 1, memo);
-  memo[index] =  Math.max(first, second);
-  return memo[index]
-};
-console.log(nonAdjacentSum([2, 4, 5, 12, 7]))
+    // todo
+    if(index in memo) return memo[index];
+    if(nums.length-1 === index) return nums[nums.length-1];
+    if(index >= nums.length) return 0
+    let first = nums[index] + nonAdjacentSum(nums, index + 2, memo);
+    let second = nonAdjacentSum(nums, index + 1, memo);
+    memo[index] =  Math.max(first, second);
+    return memo[index]
+  };
+  console.log(nonAdjacentSum([2, 4, 5, 12, 7]))
