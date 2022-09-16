@@ -38,25 +38,23 @@ createCombinations([1, 28, 94], 3); // ->
 */
 
 const createCombinations = (arr, n) => {
-  if(n > arr.length) return [[]];
-   if(n === arr.length) return [arr];
-   if(n=== 0) return [[]];
-   let container = [];
-   
-    let first = arr[0];
-    let conc = arr.slice(1);
-    let lessComb = createCombinations(conc, n-1);
-    for(let el of lessComb){
-      container.push([first, ...el])
-      }
-    let fullCombExFirst = createCombinations(arr.slice(1), n);
-    //if(fullCombExFirst.length == 1) container = [...container, fullCombExFirst]
-    container = [...container, ...fullCombExFirst]
-
-   return container;
-};
-
-console.log(createCombinations(['a','b','c'], 2));
-// let first = arr[0]
-// twoComb = combo(arr.slice(1), 2)
-// for(let el of twoComb){cont.push([first, ...el])}
+    if(n > arr.length) return [[]];
+     if(n === arr.length) return [arr];
+     if(n=== 0) return [[]];
+     let container = [];
+     
+      let first = arr[0];
+      let conc = arr.slice(1);
+      let lessComb = createCombinations(conc, n-1);
+      for(let el of lessComb){
+        container.push([first, ...el])
+        }
+      let fullCombExFirst = createCombinations(arr.slice(1), n);
+      //if(fullCombExFirst.length == 1) container = [...container, fullCombExFirst]
+      container = [...container, ...fullCombExFirst]
+  
+     return container;
+  };
+  
+  console.log(createCombinations(['a','b','c'], 2));
+  
