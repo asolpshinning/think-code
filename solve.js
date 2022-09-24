@@ -1,56 +1,62 @@
-function prereqsPossible(n, prereqs) {
-    var graph = buildGraph(n, prereqs);
-    var visited = new Set();
-    var visiting = new Set();
-    for (var course in graph) {
-        if (isCyclic(course, graph, visited, visiting)) {
-            return false;
+function bestBridge(grid) {
+    var islands = findIslands(grid);
+    var [island1, island2] = islands;
+    var minBridge = Infinity;
+    for (var i = 0; i < island1.length; i++) {
+        for (var j = 0; j < island2.length; j++) {
+            var [x1, y1] = island1[i];
+            var [x2, y2] = island2[j];
+            var distance = Math.abs(x1 - x2) + Math.abs(y1 - y2) - 1;
+            minBridge = Math.min(minBridge, distance);
         }
     }
-    //write the isCyclic function
-    function isCyclic(course, graph, visited, visiting) {
-        console.log(`visited has ${course} is: `, visited.has(course))
-        if (visited.has(course)) {
-            return false;
-        }
-        visiting.add(course);
-        console.log(`visiting just added `, course)
-        for (var neighbor of graph[course]) {
-            console.log(`Looping through ${neighbor} and visiting has neighbor is ${visiting.has(neighbor)}`)
-            if (visiting.has(neighbor) || isCyclic(neighbor, graph, visited, visiting)) {
-                return true;
+
+    function findIslands(grid) {
+        var islands = [];
+        for (var i = 0; i < grid.length; i++) {
+            for (var j = 0; j < grid[i].length; j++) {
+                if (grid[i][j] === 'L') {
+                    var island = exploreIsland(grid, i, j);
+                    islands.push(island);
+                }
             }
         }
-        visiting.delete(course);
-        console.log(`visiting just deleted `, course)
-        visited.add(course);
-        console.log(`visitED just added `, course)
-        return false;
+        return islands;
     }
-    //write the buildGraph functio
-    function buildGraph(n, prereqs) {
-        var graph = {};
-        for (var i = 0; i < n; i++) {
-            graph[i] = new Set();
+    //write the exploreIsland function
+    function exploreIsland(grid, i, j) {
+        var island = [];
+        var stack = [[i, j]];
+        while (stack.length > 0) {
+            var [i, j] = stack.pop();
+            if (grid[i][j] === 'L') {
+                island.push([i, j]);
+                grid[i][j] = 'V';
+                if (i > 0) {
+                    stack.push([i - 1, j]);
+                }
+                if (i < grid.length - 1) {
+                    stack.push([i + 1, j]);
+                }
+                if (j > 0) {
+                    stack.push([i, j - 1]);
+                }
+                if (j < grid[i].length - 1) {
+                    stack.push([i, j + 1]);
+                }
+            }
         }
-        for (var prereq of prereqs) {
-            var [course, prereq] = prereq;
-            graph[course].add(prereq);
-        }
-        return graph;
+        return island;
     }
 
+    return minBridge;
 
-    return true;
+
 }
 
-const numCourses = 8;
-const prereqs = [
-  [1, 0],
-  [0, 6],
-  [2, 0],
-  [0, 5],
-  [3, 7],
-  [4, 3],
-];
-prereqsPossible(numCourses, prereqs); // -> true
+const grid = [
+    ["W", "W", "W", "W", "W"],
+    ["W", "W", "W", "L", "W"],
+    ["L", "W", "W", "W", "W"],
+  ];
+console.log(bestBridge(grid)); // -> 3
