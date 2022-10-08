@@ -1,13 +1,7 @@
-function repeatedNum(arr){
-  let sum = 0
-  for(let el of arr){
-    sum += el
-  }
-  for(let i = 1 ; i <= arr.length-1; i++){
-    sum -= i
-  }
-  return sum
-}
+let arr = [9,7,5,3];
+console.log(`initially: `, arr)
+arr.push(1)
+console.log(`after pushing 1: `, arr)
+arr.unshift(20,15)
+console.log(`after unshifting 20 and 15: `, arr)
 
-console.log(repeatedNum([1,3,4,2,2]))
-console.log(repeatedNum([3,1,3,4,2]))
