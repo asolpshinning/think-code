@@ -1,45 +1,51 @@
-function remLongestPalindrome(str) {
-   //define isPalindrome function
-   function isPalindrome(str) {
-        //define a variable that is the reverse of the string
-        let reverse = str.split('').reverse().join('');
-        //if the string is equal to the reverse of the string, return true
-        if (str === reverse) {
-            return true;
-        }
-        //if the string is not equal to the reverse of the string, return false
-        else {
-            return false;
-        }
-    }
-    //write a function that removes the longest palindrome from a string
-    function removePalindrome(str) {
-        let longest = "";
-        //find the longest palindrome in the string by first checking if the given str is a palindrome,
-        //if not, remove the last character of the string one at a time, until you find a palindrome
-        if (isPalindrome(str)) {
-            return [str, ""];
+const { memoryUsage } = require("process");
+
+/**
+ * You are given an array of integers nums, there is a sliding window of size k 
+ * which is moving from the very left of the array to the very right. 
+ * You can only see the k numbers in the window. Each time the sliding window moves right by one position.
+
+Return the max sliding window.
+ * @param {number[]} nums
+ * @param {number} k
+ * @return {number[]}
+ */
+ var maxSlidingWindow = function(nums, k) {
+    let result = [];
+    let max = 0;
+    let nmax = 0;
+    for(let i = 0; i < k; i++){
+        if(nums[i] >= max) {
+            nmax = max
+            max = nums[i];
         } else {
-            for (let i = str.length - 1; i >= 0; i--) {
-                let newStr = str.slice(0, i);
-                if (isPalindrome(newStr)) {
-                    longest = newStr;
-                    break;
-                }
-            }
-
-            return [longest, str.replace(longest, "")];
+            if(nmax < nums[i]) nmax = nums[i];
         }
     }
-
-    if (str === "") {
-        return "";
+    result.push(max);
+    let pointer = 0;
+    let index = k
+    while(index < nums.length){
+        if(k === 1) nmax = nums[index+1]
+        if(nums[pointer] === max) max = nmax;
+        if(nums[index] > max) {
+            nmax = max;
+            max = nums[index];
+        } else {
+            if(nmax < nums[index]) nmax = nums[index];
+        }
+        result.push(max)
+        index++
+        pointer++
     }
-    let [longest, remaining] = removePalindrome(str);
-    if (longest.length === 1) return remaining;
-    else return remLongestPalindrome(remaining);
+
+    return result
     
+};
 
-}
+//[1,-1]
 
-console.log(remLongestPalindrome('oyoq'))
+const nums = [1,3,-1,-3,5,3,6,7]
+const k = 3
+const Output = [3,3,5,5,6,7];
+console.log(maxSlidingWindow(nums,k));
